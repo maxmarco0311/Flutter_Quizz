@@ -20,7 +20,7 @@ class Question11Screen extends StatelessWidget {
                 crossAxisCount: 3,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                childAspectRatio: 1 / 1.3,
+                childAspectRatio: 1 / 1.2,
               ),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {

@@ -12,13 +12,13 @@ class Question10Screen extends StatefulWidget {
 }
 
 class _Question10ScreenState extends State<Question10Screen> {
-  late final UserBloc _eventBloc = context.read<UserBloc>();
+  late final UserBloc _userBloc = context.read<UserBloc>();
   final List<User> _users = [];
   bool _isLoading = false;
 
   @override
   void initState() {
-    _eventBloc.add(FetchUserEvent());
+    _userBloc.add(FetchUserEvent());
     super.initState();
   }
 
@@ -49,7 +49,7 @@ class _Question10ScreenState extends State<Question10Screen> {
             setState(() {
               _users.clear();
             });
-            _eventBloc.add(FetchUserEvent());
+            _userBloc.add(FetchUserEvent());
           },
           child: const Text('Start'),
         ),

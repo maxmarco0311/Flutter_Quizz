@@ -16,15 +16,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       try {
         await Future.delayed(const Duration(seconds: 3), () {
           final responseBody = fakeAPIRequest();
-          // 因為這裡的responseBody是寫死的，所以不為空
-          // compiler不讓我檢查是否為null
+          // json.decode吃json string，轉成Map<String, dynamic>
           Map<String, dynamic> sourceMap = json.decode(responseBody);
+          // Map<String, dynamic>用[]取值後要轉型
           final data = sourceMap['data'] as List<dynamic>;
           final users = <User>[];
-          for (final element in data) {
-            final user = User.fromMap(element as Map<String, dynamic>);
-            users.add(user);
-          }
+          // 現在常用的套件吃Map<String, dynamic>的是fromJson()，Dart Data Class Generator是fromMap()
+          users.addAll(data
+              .map((element) => User.fromMap(element as Map<String, dynamic>)));
+          // json.encode吃任何型別的object(含Map<String, dynamic>），轉成json string
+
+          // users.addAll(
+          //     data.map((element) => User.fromJson(json.encode(element))));
           emit(FetchUserSuccess(users: users));
         });
       } on Error catch (e) {
